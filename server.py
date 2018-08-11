@@ -3,6 +3,7 @@ import bugsnag
 from bugsnag.flask import handle_exceptions
 from flask import (Flask, jsonify, render_template,
 redirect, request, session, Markup, has_request_context)
+from suggestions import suggs
 
 app = Flask(__name__)
 handle_exceptions(app)
@@ -13,24 +14,31 @@ bugsnag.configure(
     api_key=os.environ.get("BUGSNAG_KEY", "addBugsnagKeyHere")
 )
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     """loads homepage"""
     return render_template("index.html")
 
-@app.route('/suggestions ')
+@app.route('/suggestions', methods=['GET'])
 def suggest():
     """returns suggestions from list based on a string of the user's input so far.
     """
-    return
+    user_input = request.args.get("user_input", "")
+    offered_responses = []
 
-@app.route('/kartItem')
+    if user_input:
+        for s in suggs:
+            if s.startswith(user_input):
+                offered_responses.append(s)
+    return offered_responses
+
+@app.route('/kartItem', methods=['POST'])
 def add_item():
     """adds user's current string input as an item to the cart.
     """
     return
 
-@app.route('/kart')
+@app.route('/kart', methods=['GET'])
 def show_kart():
     """shows items currently in the cart with their quantity.
     """
