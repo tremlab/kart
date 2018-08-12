@@ -61,6 +61,8 @@ def add_item():
         "quantity": 1
         })
 
+        suggs.append(user_input)
+
     # return the updated cart which will be used to update state
     return get_kart()
 

@@ -38,11 +38,13 @@ class UserInput extends React.Component {
 				this.setState({ suggestions: data })
 			});
 	}
+
 	render() {
 		return (
 			<div>
+				<Suggestions suggestions={this.state.suggestions}/>
 				<form className="Form">
-					<input placeholder="start typing...." value={this.state.userInput} onChange={this.handleInputChange} />
+					<input placeholder="start typing...." list="suggestions" type="text" value={this.state.userInput} onChange={this.handleInputChange} />
 					<button onClick={this.handleInputAdd}>Add</button>
 				</form>
 				<Kart kart={this.state.kart}/>
@@ -50,7 +52,6 @@ class UserInput extends React.Component {
 		);
 	}
 }
-// </Suggestions suggestions={this.state.suggestions}/>
 
 
 export default UserInput;
