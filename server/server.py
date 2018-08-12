@@ -14,6 +14,12 @@ bugsnag.configure(
     api_key=os.environ.get("BUGSNAG_KEY", "addBugsnagKeyHere")
 )
 
+# starting simple for troubleshooting - to hold added cart items.
+current_cart = [{
+    "item": "testingdfkg",
+    "quantity": 42
+}]
+
 @app.route('/', methods=['GET'])
 def index():
     """loads homepage"""
@@ -37,22 +43,41 @@ def suggest():
 def add_item():
     """adds user's current string input as an item to the cart.
     """
-    user_input = request.args.get("user_input", "")
+    # had some difficulty parsing the jquey data
+    x = request.form
+    y = x.to_dict(flat=False)
+    user_input = y["userInput"][0]
 
-    # add item to cart
-    # empty input field
+    found = False
+    for i in current_cart:
+        if i["item"] == user_input:
+            i["quantity"] = i["quantity"] + 1
+            found = True
+            break
 
-    return
+    if found == False:
+        current_cart.append({
+        "item": user_input,
+        "quantity": 1
+        })
+
+    # return the updated cart which will be used to update state
+    return get_kart()
 
 @app.route('/kart', methods=['GET'])
-def show_kart():
+def shows_cart():
+    return get_kart()
+
+def get_kart():
     """shows items currently in the cart with their quantity.
     """
-    return
+    return jsonify(current_cart)
+
 
 def submit_kart():
     """sends cart contents to https://kart.example.com/submit as json.
     """
+
     return
 
 if __name__ == '__main__':

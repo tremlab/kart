@@ -1,12 +1,12 @@
 import React from 'react';
-// import Header from './components/Header.jsx';
-// import Image from './components/Image.jsx';
-// import HelloGoodbye from './components/HelloGoodbye.jsx';
+import UserInput from './components/UserInput.jsx';
+
 
 const App = () => {
     return (
         <div className="App">
             Hello from the App component!
+            <UserInput />
         </div>
     );
 };

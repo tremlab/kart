@@ -18,7 +18,7 @@ module.exports = {
     port: 9000
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.json'],
   },
   // webpack only understands javascript! loaders transform files into modules for webpack
   module: {
