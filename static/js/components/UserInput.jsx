@@ -6,11 +6,17 @@ import Suggestions from './Suggestions.jsx';
 class UserInput extends React.Component {
 	constructor(props) {
 		super(props);
+		this.existing_kart = []
+		$.get(window.location.href + 'kart', (data) => {
+						this.existing_kart = (data)
+					});
 		this.state = {
 			userInput: '',
-			kart: [],
+			// initilaizing to [], due to async. no cart appears on very first load.
+			kart: this.existing_kart,
 			suggestions: []
 		};
+
 		this.handleInputAdd = this.handleInputAdd.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
