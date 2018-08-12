@@ -14,15 +14,14 @@ bugsnag.configure(
     api_key=os.environ.get("BUGSNAG_KEY", "addBugsnagKeyHere")
 )
 
-# starting simple for troubleshooting - to hold added cart items.
-current_cart = [{
-    "item": "testingdfkg",
-    "quantity": 42
-}]
-
 @app.route('/', methods=['GET'])
 def index():
     """loads homepage"""
+    if "my_kart" in session:
+        print("found", session["my_kart"])
+    else:
+        session['my_kart'] = []
+
     return render_template("index.html")
 
 @app.route('/suggestions', methods=['GET'])
@@ -49,17 +48,20 @@ def add_item():
     user_input = y["userInput"][0]
 
     found = False
-    for i in current_cart:
+
+    for i in session["my_kart"]:
         if i["item"] == user_input:
             i["quantity"] = i["quantity"] + 1
+            session.modified = True
             found = True
             break
 
     if found == False:
-        current_cart.append({
+        session["my_kart"].append({
         "item": user_input,
         "quantity": 1
         })
+        session.modified = True
 
         suggs.append(user_input)
 
@@ -73,7 +75,7 @@ def shows_cart():
 def get_kart():
     """shows items currently in the cart with their quantity.
     """
-    return jsonify(current_cart)
+    return jsonify(session["my_kart"])
 
 
 def submit_kart():
