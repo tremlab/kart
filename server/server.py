@@ -29,7 +29,7 @@ def index():
 def suggest():
     """returns suggestions from list based on a string of the user's input so far.
     """
-    user_input = request.args.get("user_input", "")
+    user_input = request.args.get("userInput", "")
     offered_responses = []
 
     if user_input:
@@ -37,7 +37,7 @@ def suggest():
             if s.startswith(user_input):
                 offered_responses.append(s)
 
-    return offered_responses
+    return jsonify(offered_responses)
 
 @app.route('/kartItem', methods=['POST'])
 def add_item():

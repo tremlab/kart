@@ -1,21 +1,23 @@
 import React from 'react';
 import $ from 'jquery';
 import Kart from './Kart.jsx';
+import Suggestions from './Suggestions.jsx';
 
 class UserInput extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			userInput: '',
-			kart: []
+			kart: [],
+			suggestions: []
 		};
 		this.handleInputAdd = this.handleInputAdd.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
 	handleInputAdd(event) {
 		event.preventDefault();
-		console.log('adding...')
 		const uInput = this.state.userInput
+		console.log('adding...', uInput)
 
 		if (uInput) {
 			$.post(window.location.href + 'kartItem', {"userInput": uInput}, (data) => {
@@ -32,7 +34,9 @@ class UserInput extends React.Component {
 		this.setState({
 			userInput: value
 		});
-		// get suggestions and display
+		$.get(window.location.href + 'suggestions?userInput=' + value, (data) => {
+				this.setState({ suggestions: data })
+			});
 	}
 	render() {
 		return (
@@ -46,5 +50,7 @@ class UserInput extends React.Component {
 		);
 	}
 }
+// </Suggestions suggestions={this.state.suggestions}/>
+
 
 export default UserInput;
