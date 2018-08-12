@@ -43,7 +43,7 @@ def suggest():
 def add_item():
     """adds user's current string input as an item to the cart.
     """
-    # had some difficulty parsing the jquey data
+    # had some difficulty parsing the jquery data
     x = request.form
     y = x.to_dict(flat=False)
     user_input = y["userInput"][0]

@@ -5,7 +5,7 @@ import UserInput from './components/UserInput.jsx';
 const App = () => {
     return (
         <div className="App">
-            Hello from the App component!
+            Home
             <UserInput />
         </div>
     );

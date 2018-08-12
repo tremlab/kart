@@ -7,7 +7,7 @@ class UserInput extends React.Component {
 		super(props);
 		this.state = {
 			userInput: '',
-			kart: {}
+			kart: []
 		};
 		this.handleInputAdd = this.handleInputAdd.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -18,9 +18,7 @@ class UserInput extends React.Component {
 		const uInput = this.state.userInput
 
 		if (uInput) {
-			console.log(uInput)
 			$.post(window.location.href + 'kartItem', {"userInput": uInput}, (data) => {
-			    console.log(data);
 					this.setState({ kart: data })
 			  });
 
