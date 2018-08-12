@@ -3,6 +3,7 @@ import bugsnag
 from bugsnag.flask import handle_exceptions
 from flask import (Flask, jsonify, render_template,
 redirect, request, session, Markup, has_request_context)
+import requests
 from suggestions import suggs
 
 app = Flask(__name__, static_folder="../static/dist", template_folder="../static")
@@ -81,8 +82,14 @@ def get_kart():
 def submit_kart():
     """sends cart contents to https://kart.example.com/submit as json.
     """
+    payload = {"kart": session["my_kart"]}
+    r = requests.post("https://kart.example.com/submit", data=payload)
+    print(r.text)
+    return r.status_code
 
-    return
+    # current error returning from this url:
+
+        # urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='kart.example.com', port=443): Max retries exceeded with url: /submit (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f3be31cb518>: Failed to establish a new connection: [Errno -2] Name or service not known',))
 
 if __name__ == '__main__':
     # below simply confirms a page laod occurred.
