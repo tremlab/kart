@@ -1,4 +1,5 @@
-var path = require('path');
+const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   // entry: webpack's entry file, where webpack will start looking to build it's dependency graph
@@ -8,7 +9,7 @@ module.exports = {
     // the filename of the output file
     filename: 'bundle.js',
     // the path to the directory where the output file should go
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
   // these are configurations for the dev server
   devtool: 'inline-source-map',
@@ -20,7 +21,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
   },
-  // webpack only understands javascript! loaders transform files into modules for webpack
   module: {
     // this is an array of loaders
     rules: [

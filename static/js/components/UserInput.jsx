@@ -17,12 +17,15 @@ class UserInput extends React.Component {
 	}
 
 	componentDidMount() {
+		// gets cart from server to check if an exisitng list is in the user's session.
 		$.get(window.location.href + 'kart', (data) => {
 			this.setState({ kart: data })
 		});
 	}
 
 	handleInputAdd(event) {
+		// passes current input to server for processing into session kart.
+		// then empties input field on form.
 		event.preventDefault();
 		const uInput = this.state.userInput
 		console.log('adding...', uInput)
@@ -37,7 +40,10 @@ class UserInput extends React.Component {
 			});
 		}
 	}
+
 	handleInputChange(event) {
+		// gets from server an array of potential matches for the user's input so far
+		// and updates suggestions in state.
 		const value = event.target.value;
 		this.setState({
 			userInput: value

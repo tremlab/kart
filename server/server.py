@@ -17,7 +17,7 @@ bugsnag.configure(
 
 @app.route('/', methods=['GET'])
 def index():
-    """loads homepage"""
+    """loads homepage.  checks if a cart already exists in session, or creates one."""
     if "my_kart" in session:
         print("found", session["my_kart"])
     else:
@@ -51,6 +51,7 @@ def add_item():
     found = False
 
     for i in session["my_kart"]:
+        # if in cart, increase quantity, rather than make a new line item.
         if i["item"] == user_input:
             i["quantity"] = i["quantity"] + 1
             session.modified = True
@@ -58,12 +59,14 @@ def add_item():
             break
 
     if found == False:
+        # append new item to cart.
         session["my_kart"].append({
         "item": user_input,
         "quantity": 1
         })
         session.modified = True
 
+        # adds this new item to the list of suggested matches.
         suggs.append(user_input)
 
     # return the updated cart which will be used to update state
@@ -84,7 +87,6 @@ def submit_kart():
     """
     payload = {"kart": session["my_kart"]}
     r = requests.post("https://kart.example.com/submit", data=payload)
-    print(r.text)
     return r.status_code
 
     # current error returning from this url:
